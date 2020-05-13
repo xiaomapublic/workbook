@@ -8,6 +8,7 @@ type HeroNode struct {
 	name     string    //名称
 	nickname string    //昵称
 	next     *HeroNode //下一个结点的地址
+	pre      *HeroNode //上一个结点的地址
 }
 
 //单链表，实现增删改查
@@ -63,7 +64,7 @@ func main() {
 	del(head, 2)
 	get(head)
 
-	mod(head, 5, 1)
+	mod(head, 4, 2)
 	get(head)
 }
 
@@ -85,6 +86,10 @@ func add(head *HeroNode, newNode *HeroNode) {
 	}
 
 	newNode.next = tempNode.next
+	newNode.pre = tempNode
+	if tempNode.next != nil { //边界问题，如果要删除的数据为最后一个，则不会next为nil
+		tempNode.next.pre = newNode
+	}
 	tempNode.next = newNode
 }
 
@@ -103,8 +108,13 @@ Loop:
 			tempNode = tempNode.next
 		}
 
+		if tempNode.next.next != nil { //边界问题，如果要删除的数据为最后一个，则next为nil
+			tempNode.next.next.pre = tempNode
+		}
+
 		tempNode.next = tempNode.next.next
 	}
+
 }
 
 //改
@@ -114,6 +124,7 @@ Loop:
 		tempNode := head
 		for {
 			if tempNode.next == nil { //如果到链表最后还未找到则结束代码执行
+				//fmt.Printf("%s\n", "要修改的数据不存在")
 				break Loop
 			} else if tempNode.next.number == number {
 				break
@@ -124,6 +135,9 @@ Loop:
 		modNode := tempNode.next
 		modNode.number = modNumber
 		tempNode.next = tempNode.next.next
+		if tempNode.next != nil { //边界问题，如果要删除的数据为最后一个，则next为nil
+			tempNode.next.pre = tempNode
+		}
 
 		add(head, modNode)
 	}
