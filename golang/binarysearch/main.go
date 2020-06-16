@@ -10,20 +10,20 @@ import (
 //二分查找
 func main() {
 	randObj := rand.New(rand.NewSource(time.Now().UnixNano()))
-	randNumMax := 5000
+	randNumMax := 50000
 	arr_one := randObj.Perm(randNumMax)
 	arr_two := randObj.Perm(randNumMax)
 
 	arrOneLastIndex := len(arr_one) - 1
 	arrTwoLastIndex := len(arr_two) - 1
 
-	//randNum := randObj.Intn(randNumMax)
-	randNum := 93
+	randNum := randObj.Intn(randNumMax)
+	//randNum := 93
 
 	time1 := time.Now()
 	asc(0, arrOneLastIndex, arr_one)
-	fmt.Printf("排序耗时：%v\n", time.Since(time1))
 	asc(0, arrTwoLastIndex, arr_two)
+	fmt.Printf("排序耗时：%v\n", time.Since(time1))
 
 	time2 := time.Now()
 	cycleResult, cycleCount, ok := cycle(0, arrOneLastIndex, arr_one, randNum)
