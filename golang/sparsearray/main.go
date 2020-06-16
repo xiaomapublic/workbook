@@ -50,7 +50,7 @@ func main() {
 		}
 	}
 
-	file, _ := os.OpenFile("sparsearray/sparsearray.data", os.O_RDWR|os.O_CREATE, 0666)
+	file, _ := os.OpenFile("sparsearray.data", os.O_RDWR|os.O_CREATE, 0666)
 	defer file.Close()
 
 	// 方式一：带缓存的写入
@@ -66,7 +66,7 @@ func main() {
 	writer.Flush()
 
 	//从文件中读取稀疏数组，还原后打印
-	fileOpen, _ := os.Open("sparsearray/sparsearray.data")
+	fileOpen, _ := os.Open("sparsearray.data")
 	defer fileOpen.Close()
 	reader := bufio.NewReader(fileOpen)
 
